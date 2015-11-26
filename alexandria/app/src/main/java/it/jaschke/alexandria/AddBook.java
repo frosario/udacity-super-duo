@@ -5,6 +5,8 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
@@ -34,13 +36,13 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private final String EAN_CONTENT="eanContent";
     private static final String SCAN_FORMAT = "scanFormat";
     private static final String SCAN_CONTENTS = "scanContents";
-
     private String mScanFormat = "Format:";
     private String mScanContents = "Contents:";
+    private Context context;
 
 
-
-    public AddBook(){
+    public AddBook(Context c){
+        context = c;
     }
 
     @Override
@@ -207,6 +209,18 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = cm.getActiveNetworkInfo();
+
+        //Check for network connection and short circuit if none found.
+        if (activeNetworkInfo == null || !activeNetworkInfo.isConnected()) {
+            String text = "Network not available, please try again later";
+            int duration = Toast.LENGTH_LONG;
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+            return;
+        }
+
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
                 String contents = intent.getStringExtra("SCAN_RESULT");
