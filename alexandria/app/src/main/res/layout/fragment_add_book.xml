@@ -33,7 +33,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/scan_button"
-                android:id="@+id/scan_button"/>
+                android:id="@+id/scan_button"
+                android:onClick="scanBarcode"
+                android:nestedScrollingEnabled="true" />
 
         </LinearLayout>
 
