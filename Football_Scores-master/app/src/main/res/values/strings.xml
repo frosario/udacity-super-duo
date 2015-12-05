@@ -45,4 +45,6 @@
     <string name="accessibility_data_textview">View data</string>
     <string name="accessibility_away_crest">Picture of the away team\'s crest</string>
     <string name="accessibility_away_name">Away team\'s name</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

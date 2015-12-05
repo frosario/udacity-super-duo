@@ -25,9 +25,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
 
-    public MainScreenFragment()
-    {
-    }
+    public MainScreenFragment() {}
 
     private void update_scores()
     {
@@ -72,12 +70,10 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor)
     {
-        //Log.v(FetchScoreTask.LOG_TAG,"loader finished");
         //cursor.moveToFirst();
         /*
         while (!cursor.isAfterLast())
         {
-            Log.v(FetchScoreTask.LOG_TAG,cursor.getString(1));
             cursor.moveToNext();
         }
         */
@@ -89,7 +85,6 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
             i++;
             cursor.moveToNext();
         }
-        //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
         mAdapter.swapCursor(cursor);
         //mAdapter.notifyDataSetChanged();
     }
