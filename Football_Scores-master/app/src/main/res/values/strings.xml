@@ -47,4 +47,6 @@
     <string name="accessibility_away_name">Away team\'s name</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+    <string name="tutorial_text">"This is the default view to display today's matches. Swipe left for past games, and swipe right for future matches"</string>
+    <string name="button_got_it">"Got it!"</string>
 </resources>

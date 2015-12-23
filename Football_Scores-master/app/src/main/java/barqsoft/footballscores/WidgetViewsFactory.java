@@ -82,7 +82,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
         scoreListItem.setTextColor(R.id.data_textview, Color.BLACK);
         scoreListItem.setFloat(R.id.data_textview, "setTextSize", 14);
 
-        //TODO: Find the real image and method
         scoreListItem.setImageViewResource(R.id.away_crest, Utilies.getTeamCrestByTeamName(awayString));
         scoreListItem.setTextViewText(R.id.away_name, awayString);
         scoreListItem.setTextColor(R.id.away_name, Color.BLACK);

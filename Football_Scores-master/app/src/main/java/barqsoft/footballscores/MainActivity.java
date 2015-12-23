@@ -1,12 +1,19 @@
 package barqsoft.footballscores;
 
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.view.View;
+import android.view.ViewGroup;
+import java.io.File;
+import java.io.IOException;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -15,25 +22,32 @@ public class MainActivity extends ActionBarActivity
     public static String LOG_TAG = "MainActivity";
     private final String save_tag = "Save Test";
     private PagerFragment my_main;
+    private View tutorialView;
+    private ViewGroup viewGroup;
+    private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d(LOG_TAG, "Reached MainActivity onCreate");
+        fileName = this.getFilesDir().getPath().toString() + "/tutorial-shown";
 
         if (savedInstanceState == null) {
             my_main = new PagerFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, my_main)
-                    .commit();
-        }
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.container, my_main);
+            transaction.commit();
 
-        //TODO: Replace this with a proper tutorial
-        String text = "Swipe left or right to get started";
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
+            if (!tutorialShown()) {
+                LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                tutorialView = inflater.inflate(R.layout.fragment_tutorial, null);
+                viewGroup = (ViewGroup) findViewById(R.id.container);
+                viewGroup.addView(tutorialView);
+
+                TutorialTimer timer = new TutorialTimer();
+                timer.execute();
+            }
+        }
     }
 
 
@@ -78,5 +92,37 @@ public class MainActivity extends ActionBarActivity
         selected_match_id = savedInstanceState.getInt("Selected_match");
         my_main = (PagerFragment) getSupportFragmentManager().getFragment(savedInstanceState,"my_main");
         super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    private class TutorialTimer extends AsyncTask {
+
+        @Override
+        protected Object doInBackground(Object[] params) {
+            try {
+                Log.d("MainActivity", "Sleeping now");
+                Thread.sleep(5000);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+            viewGroup.removeView(tutorialView);
+            File file = new File(fileName);
+
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private boolean tutorialShown() {
+        File file = new File(fileName);
+        return file.exists();
     }
 }

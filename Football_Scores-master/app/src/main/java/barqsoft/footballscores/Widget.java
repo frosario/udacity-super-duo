@@ -25,7 +25,3 @@ public class Widget extends AppWidgetProvider {
     }
 
 }
-
-
-//TODO: Change update interval to every 30 mins
-//TODO: Update "no icon" with actual drawables. Maybe create a hashmap for this?
