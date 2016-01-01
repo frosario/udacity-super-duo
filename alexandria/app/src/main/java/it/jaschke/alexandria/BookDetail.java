@@ -120,7 +120,7 @@ public class BookDetail extends Fragment implements LoaderManager.LoaderCallback
         } else {
             authorsArr = new String[0];
         }
-        
+
         String imgUrl = data.getString(data.getColumnIndex(AlexandriaContract.BookEntry.IMAGE_URL));
         if(Patterns.WEB_URL.matcher(imgUrl).matches()){
             new DownloadImage((ImageView) rootView.findViewById(R.id.fullBookCover)).execute(imgUrl);
