@@ -24,6 +24,7 @@
                     android:textSize="@dimen/head_line"
                     android:textIsSelectable="true"
                     android:textStyle="bold"
+                    android:paddingRight="20dp"
                     android:paddingEnd="20dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
