@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence title;
-    public static boolean IS_TABLET = false;
+    public static boolean wideScreen = false;
     private BroadcastReceiver messageReciever;
 
     public static final String MESSAGE_EVENT = "MESSAGE_EVENT";
@@ -40,8 +40,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        IS_TABLET = isTablet();
-        if(IS_TABLET){
+        wideScreen = isWideScreen();
+        if(wideScreen){
             setContentView(R.layout.activity_main_tablet);
         }else {
             setContentView(R.layout.activity_main);
@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 nextFragment = new ListOfBooks();
                 break;
             case 1:
-                nextFragment = new AddBook(this);
+                nextFragment = new AddBook();
                 break;
             case 2:
                 nextFragment = new About();
@@ -164,10 +164,24 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         getSupportFragmentManager().popBackStack();
     }
 
-    private boolean isTablet() {
-        return (getApplicationContext().getResources().getConfiguration().screenLayout
-                & Configuration.SCREENLAYOUT_SIZE_MASK)
-                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    public boolean isWideScreen() {
+        Boolean bool = false;
+        int screenlayout = getApplicationContext().getResources().getConfiguration().screenLayout;
+        int screenlayoutSizeMask = Configuration.SCREENLAYOUT_SIZE_MASK;
+        int screenlayoutSizeLarge = Configuration.SCREENLAYOUT_SIZE_LARGE;
+
+        if ((screenlayout & screenlayoutSizeMask) >= screenlayoutSizeLarge) {
+            bool = true;
+        }
+
+        int orientation = getResources().getConfiguration().orientation;
+        int landscape = Configuration.ORIENTATION_LANDSCAPE;
+
+        if (orientation == landscape) {
+            bool = true;
+        }
+
+        return bool;
     }
 
     @Override

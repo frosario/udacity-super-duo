@@ -41,9 +41,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
     private Context context;
 
 
-    public AddBook(Context c){
-        context = c;
-    }
+    public AddBook() {}
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -55,6 +53,7 @@ public class AddBook extends Fragment implements LoaderManager.LoaderCallbacks<C
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        context = (Context) getActivity();
 
         rootView = inflater.inflate(R.layout.fragment_add_book, container, false);
         ean = (EditText) rootView.findViewById(R.id.ean);
