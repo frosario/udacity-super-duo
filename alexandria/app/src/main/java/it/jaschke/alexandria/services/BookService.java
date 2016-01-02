@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,10 +33,8 @@ import it.jaschke.alexandria.data.AlexandriaContract;
 public class BookService extends IntentService {
 
     private final String LOG_TAG = BookService.class.getSimpleName();
-
     public static final String FETCH_BOOK = "it.jaschke.alexandria.services.action.FETCH_BOOK";
     public static final String DELETE_BOOK = "it.jaschke.alexandria.services.action.DELETE_BOOK";
-
     public static final String EAN = "it.jaschke.alexandria.services.extra.EAN";
 
     public BookService() {
@@ -158,6 +157,15 @@ public class BookService extends IntentService {
 
         try {
             JSONObject bookJson = new JSONObject(bookJsonString);
+
+            if (bookJson == null) {
+                String text = "API call for book information failed. Please try again later";
+                int duration = Toast.LENGTH_LONG;
+                Toast toast = Toast.makeText(this, text, duration);
+                toast.show();
+                return;
+            }
+
             JSONArray bookArray;
             if(bookJson.has(ITEMS)){
                 bookArray = bookJson.getJSONArray(ITEMS);
